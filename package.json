@@ -1,0 +1,17 @@
+{
+  "name": "shopverse-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hackathon-ready AI-powered hyperlocal commerce demo.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "shopverse",
+    "hyperlocal",
+    "commerce",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT"
+}

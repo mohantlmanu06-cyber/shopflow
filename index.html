@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ShopVerse AI</title>
+    <meta name="description" content="Database-backed hyperlocal marketplace for customers and local shopkeepers." />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="auth-screen" id="authScreen" aria-label="Authentication">
+        <div class="auth-visual">
+          <img src="assets/shopverse-hero.png" alt="Local shops connected with digital commerce" />
+          <div class="auth-visual-copy">
+            <div class="brand"><span class="brand-mark">SV</span><span>ShopVerse AI</span></div>
+            <h1>Local marketplace. Live inventory. Real orders.</h1>
+            <p>Customers and shopkeepers connect through one synchronized database-backed platform.</p>
+          </div>
+        </div>
+
+        <section class="auth-card">
+          <div class="auth-mode">
+            <button class="active" type="button" data-auth-mode="login">Login</button>
+            <button type="button" data-auth-mode="register">Register</button>
+          </div>
+
+          <div class="auth-heading">
+            <p class="eyebrow" id="authEyebrow">Welcome back</p>
+            <h2 id="authTitle">Login to ShopVerse</h2>
+            <p id="authSubtitle">Access your customer or shopkeeper dashboard.</p>
+          </div>
+
+          <form id="authForm" class="auth-form">
+            <div class="role-picker">
+              <label><input type="radio" name="role" value="customer" checked /> Customer</label>
+              <label><input type="radio" name="role" value="shopkeeper" /> Shopkeeper</label>
+            </div>
+            <label class="register-only">
+              Full name
+              <input id="nameInput" type="text" autocomplete="name" />
+            </label>
+            <label>
+              Email
+              <input id="emailInput" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              Password
+              <input id="passwordInput" type="password" autocomplete="current-password" required minlength="6" />
+            </label>
+            <label class="shopkeeper-only register-only">
+              Store name
+              <input id="storeNameInput" type="text" />
+            </label>
+            <label class="shopkeeper-only register-only">
+              Store address
+              <input id="storeAddressInput" type="text" />
+            </label>
+            <button class="primary-button full" id="authSubmit" type="submit">Login</button>
+          </form>
+          <div class="form-message" id="authMessage"></div>
+        </section>
+      </section>
+
+      <section class="dashboard-shell" id="customerDashboard" aria-label="Customer dashboard">
+        <header class="app-header">
+          <div class="brand"><span class="brand-mark">SV</span><span>Customer Marketplace</span></div>
+          <div class="header-actions">
+            <span class="session-label" id="customerSession"></span>
+            <button class="secondary-button" type="button" id="customerLogout">Logout</button>
+          </div>
+        </header>
+
+        <section class="dashboard-hero">
+          <div>
+            <p class="eyebrow">Customer Dashboard</p>
+            <h2>Browse live products from nearby stores</h2>
+          </div>
+          <div class="hero-actions">
+            <button class="secondary-button" type="button" data-customer-view="products">Products</button>
+            <button class="secondary-button" type="button" data-customer-view="orders">Order History</button>
+            <button class="secondary-button" type="button" data-customer-view="profile">Profile</button>
+          </div>
+        </section>
+
+        <div class="customer-layout">
+          <aside class="panel">
+            <h3>Search & Filter</h3>
+            <input id="productSearch" type="search" placeholder="Search groceries, electronics, beauty..." />
+            <select id="categoryFilter" aria-label="Filter category"></select>
+            <button class="secondary-button full" type="button" id="clearFilters">Clear Filters</button>
+
+            <div class="cart-card">
+              <div class="panel-top">
+                <h3>Cart</h3>
+                <button class="text-button" type="button" id="emptyCart">Empty</button>
+              </div>
+              <div id="cartItems" class="cart-items"></div>
+              <div class="totals" id="cartTotals"></div>
+              <button class="primary-button full" type="button" id="placeOrder">Place Order</button>
+            </div>
+
+            <div class="panel-section">
+              <h3>Wishlist</h3>
+              <div class="empty-state">Save products from the marketplace to build a personal list.</div>
+            </div>
+          </aside>
+
+          <section class="content-panel">
+            <div class="section-bar">
+              <div>
+                <h3>Marketplace Products</h3>
+                <p id="productStatus">Loading products...</p>
+              </div>
+            </div>
+            <div class="skeleton-grid" id="productSkeleton"></div>
+            <div class="product-grid" id="productGrid"></div>
+          </section>
+
+          <aside class="panel">
+            <div class="panel-top">
+              <h3>Live Tracking</h3>
+              <span id="liveBadge">Connected</span>
+            </div>
+            <div id="liveOrders" class="order-list"></div>
+            <div class="panel-section">
+              <h3>Notifications</h3>
+              <div id="customerNotifications" class="notification-list"></div>
+            </div>
+          </aside>
+        </div>
+
+        <section class="content-panel customer-section" id="customerOrdersSection">
+          <div class="section-bar">
+            <h3>Order History</h3>
+          </div>
+          <div id="customerOrders" class="order-list"></div>
+        </section>
+
+        <section class="content-panel customer-section" id="customerProfileSection">
+          <div class="section-bar">
+            <h3>Profile Settings</h3>
+          </div>
+          <div class="profile-grid" id="customerProfile"></div>
+        </section>
+      </section>
+
+      <section class="dashboard-shell" id="shopkeeperDashboard" aria-label="Shopkeeper dashboard">
+        <header class="app-header">
+          <div class="brand"><span class="brand-mark">SV</span><span>Shopkeeper Console</span></div>
+          <div class="header-actions">
+            <span class="session-label" id="shopkeeperSession"></span>
+            <button class="secondary-button" type="button" id="shopkeeperLogout">Logout</button>
+          </div>
+        </header>
+
+        <section class="dashboard-hero">
+          <div>
+            <p class="eyebrow">Shopkeeper Dashboard</p>
+            <h2>Manage products, inventory, orders, and revenue</h2>
+          </div>
+        </section>
+
+        <div class="stats-grid" id="shopkeeperStats"></div>
+
+        <div class="shopkeeper-layout">
+          <section class="content-panel">
+            <div class="section-bar">
+              <h3>Product Management</h3>
+              <span>Products sync live to customers</span>
+            </div>
+            <form id="productForm" class="product-form">
+              <input id="productIdInput" type="hidden" />
+              <label>Name <input id="productNameInput" type="text" required /></label>
+              <label>Category <select id="productCategoryInput" required></select></label>
+              <label>Price <input id="productPriceInput" type="number" min="0" step="0.01" required /></label>
+              <label>Stock <input id="productStockInput" type="number" min="0" step="1" required /></label>
+              <label>Low stock alert <input id="productLowStockInput" type="number" min="0" step="1" value="5" /></label>
+              <label>Image tag <input id="productImageInput" type="text" maxlength="8" /></label>
+              <label class="wide">Description <input id="productDescriptionInput" type="text" /></label>
+              <button class="primary-button" type="submit" id="saveProduct">Save Product</button>
+              <button class="secondary-button" type="button" id="resetProductForm">Reset</button>
+            </form>
+            <div id="shopProducts" class="data-list"></div>
+          </section>
+
+          <section class="content-panel">
+            <div class="section-bar">
+              <h3>Order Management</h3>
+              <span>Customer status updates instantly</span>
+            </div>
+            <div id="shopOrders" class="order-list"></div>
+          </section>
+        </div>
+
+        <section class="content-panel">
+          <div class="section-bar">
+            <h3>Sales Reports & Customer Insights</h3>
+          </div>
+          <div id="salesReports" class="report-grid"></div>
+        </section>
+      </section>
+    </main>
+
+    <button class="assistant-fab" id="aiFab" type="button" aria-label="Open AI chat assistant">AI</button>
+    <aside class="assistant-panel" id="aiPanel" aria-label="AI chat assistant">
+      <div class="panel-top">
+        <div>
+          <h3>AI Chat Assistant</h3>
+          <p id="assistantContext">Live marketplace helper</p>
+        </div>
+        <button class="secondary-button" id="closeAssistant" type="button">Close</button>
+      </div>
+      <div class="assistant-chips">
+        <button type="button" data-assistant-prompt="Find groceries under Rs. 1000">Groceries</button>
+        <button type="button" data-assistant-prompt="Find a coding laptop under Rs. 50000">Laptop</button>
+        <button type="button" data-assistant-prompt="What should I do next?">Next step</button>
+        <button type="button" data-assistant-prompt="Show my store performance and low stock">Store pulse</button>
+      </div>
+      <div class="assistant-messages" id="assistantMessages"></div>
+      <div class="assistant-actions" id="assistantActions"></div>
+      <form class="assistant-form" id="assistantForm">
+        <input id="assistantInput" type="text" placeholder="Ask about products, orders, stock, or sales..." />
+        <button class="primary-button" type="submit">Send</button>
+      </form>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="src/app.js"></script>
+  </body>
+</html>
