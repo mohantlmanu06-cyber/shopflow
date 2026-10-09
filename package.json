@@ -13,5 +13,8 @@
     "ai"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.5.0"
+  }
 }

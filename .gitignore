@@ -1,0 +1,5 @@
+node_modules/
+.env
+*.db
+shopverse.db
+.DS_Store
